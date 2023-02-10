@@ -1,0 +1,53 @@
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    multipart:
+      maxFileSize: 20MB
+      maxRequestSize: 100MB
+
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3316/commerce?serverTimezone=Asia/Seoul
+#    username: kay
+#    password: kay1234
+spring:
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+
+    hikari:
+      connectionTimeout: 30000
+      maximumPoolSize: 10
+
+  jpa:
+#    open-in-view: true
+    hibernate:
+      ddl-auto: create-drop
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        jdbc:
+          batch_size: 50
+        default_batch_fetch_sizebatch_size: 1000
+  sql:
+    init:
+      mode: always
+
+logging:
+  level:
+    org.hibernate.type.descriptor.sql: trace
+
+token:
+  secret: kei_token
+  issuer: kei
