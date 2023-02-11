@@ -10,5 +10,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     Optional<Review> findByPlaceIdAndUserIdAndDeleteYn(Long placeId, String userId, Boolean deleteYn);
     Optional<Review> findByReviewIdAndDeleteYn(String reviewId, Boolean deleteYn);
 
+    List<Review> findAllByPlace_PlaceIdAndDeleteYn(String placeId, Boolean deleteYn);
     List<Review> findAllByPlaceIdAndDeleteYn(String placeId, Boolean deleteYn);
 }
