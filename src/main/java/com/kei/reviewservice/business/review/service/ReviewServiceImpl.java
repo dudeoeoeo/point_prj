@@ -8,7 +8,6 @@ import com.kei.reviewservice.business.review.dto.request.EventReviewReq;
 import com.kei.reviewservice.business.review.dto.request.ReviewReq;
 import com.kei.reviewservice.business.review.dto.request.UpdateReviewReq;
 import com.kei.reviewservice.business.review.entity.Review;
-import com.kei.reviewservice.business.review.entity.ReviewImage;
 import com.kei.reviewservice.business.review.entity.ReviewImageRepository;
 import com.kei.reviewservice.business.review.entity.ReviewRepository;
 import com.kei.reviewservice.business.user.entity.User;
@@ -47,21 +46,17 @@ public class ReviewServiceImpl implements ReviewService {
         this.tokenProvider = tokenProvider;
     }
 
-    /**
-     * 예외 처리
-     * 이미 작성한 리뷰에 또 작성 불가 / 수정 삭제만 가능
-     */
     @Transactional
     @Override
     public EventReviewReq createReview(List<MultipartFile> files, ReviewReq req, String token) {
         final String userId = tokenProvider.getUserIdFromToken(token);
         final Optional<Review> reviewOptional =
-                reviewRepository.findByPlaceIdAndUserIdAndDeleteYn(req.getPlaceId(), userId, false);
+                reviewRepository.findByPlaceIdAndUserUserIdAndDeleteYn(req.getPlaceId(), userId, false);
 
         if (reviewOptional.isPresent())
             throw new IllegalArgumentException("이미 작성한 리뷰가 있습니다.");
 
-        final User user = userRepository.getReferenceById(userId);
+        final User user = userRepository.findByUserIdAndDeleteYn(userId, false).get();
         final Place place = placeRepository.getReferenceById(req.getPlaceId());
 
         final Review review = Review.createReview(req, user, place);
@@ -95,7 +90,7 @@ public class ReviewServiceImpl implements ReviewService {
         final String userId = tokenProvider.getUserIdFromToken(token);
         final Review review = findByReviewId(reviewId);
 
-        if (!userId.equals(review.getUser().getId()))
+        if (!userId.equals(review.getUser().getUserId()))
             throw new IllegalArgumentException("리뷰를 작성한 본인만 수정이 가능합니다.");
 
         review.updateReview(req);
@@ -129,7 +124,7 @@ public class ReviewServiceImpl implements ReviewService {
         final String userId = tokenProvider.getUserIdFromToken(token);
         final Review review = findByReviewId(reviewId);
 
-        if (!userId.equals(review.getUser().getId()))
+        if (!userId.equals(review.getUser().getUserId()))
             throw new IllegalArgumentException("리뷰를 작성한 본인만 삭제가 가능합니다.");
 
         review.deleteReview();

@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface PointRepository extends JpaRepository<Point, Long> {
 
-    Optional<Point> findByUserIdAndDeleteYn(String userId, Boolean deleteYn);
+    Optional<Point> findByUserUserIdAndDeleteYn(String userId, Boolean deleteYn);
 }

@@ -78,16 +78,16 @@ public class Review extends BaseTimeEntity {
         if (req.getRemoveImageIds().isEmpty()) return;
 
         this.reviewImages.stream().filter(ri -> req.getRemoveImageIds().contains(ri.getReviewImageId()))
-                .forEach(ri -> ri.deleteReviewImage(this.user.getId()));
+                .forEach(ri -> ri.deleteReviewImage(this.user.getUserId()));
     }
 
     public void deleteReview() {
-        this.setDeleteBy(this.user.getId());
+        this.setDeleteBy(this.user.getUserId());
         this.setDeleteDt(LocalDateTime.now());
         this.setDeleteYn(true);
 
         if (this.getReviewImages() != null && !this.getReviewImages().isEmpty()) {
-            this.getReviewImages().forEach(ri -> ri.deleteReviewImage(this.user.getId()));
+            this.getReviewImages().forEach(ri -> ri.deleteReviewImage(this.user.getUserId()));
         }
     }
 }

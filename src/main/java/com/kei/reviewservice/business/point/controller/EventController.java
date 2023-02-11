@@ -1,4 +1,4 @@
-package com.kei.reviewservice.business.point;
+package com.kei.reviewservice.business.point.controller;
 
 import com.kei.reviewservice.business.point.dto.response.PointRes;
 import com.kei.reviewservice.business.point.service.PointService;

@@ -8,15 +8,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(
         name = "point_log",
-        indexes = @Index(
-            name = "idx_review_id",
-            columnList = "review_id"
-        )
+        indexes = {
+                @Index(
+                        name = "idx_review_id",
+                        columnList = "review_id"
+                ),
+                @Index(
+                        name = "idx_user_id",
+                        columnList = "user_id"
+                )
+        }
 )
 @Builder
 @Getter
@@ -31,18 +36,40 @@ public class PointLog extends BaseTimeEntity {
     @Column(name = "review_id")
     private String reviewId;
 
+    @Column(name = "user_id")
+    private String userId;
+
     @Column(name = "photoYn")
     private Boolean photoYn;
 
     @Column(name = "point")
     private int point;
 
-    public static PointLog createPointLog(EventReviewReq req, int point) {
+    @Column(name = "saved_point")
+    private int savedPoint;
+
+    @Column(name = "action")
+    private String action;
+
+    public static PointLog createPointLog(EventReviewReq req, int point, int savedPoint) {
         return PointLog.builder()
                 .reviewId(req.getReviewId())
+                .userId(req.getUserId())
                 .photoYn(!req.getAttachedPhotoIds().isEmpty())
                 .point(point)
+                .savedPoint(savedPoint)
+                .action(req.getAction())
                 .build();
     }
 
+    public static PointLog createDeletePointLog(EventReviewReq req, int point, int savedPoint) {
+        return PointLog.builder()
+                .reviewId(req.getReviewId())
+                .userId(req.getUserId())
+                .photoYn(!req.getAttachedPhotoIds().isEmpty())
+                .point(point)
+                .savedPoint(savedPoint)
+                .action(req.getAction())
+                .build();
+    }
 }

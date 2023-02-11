@@ -8,5 +8,7 @@ import java.util.Optional;
 public interface PointLogRepository extends JpaRepository<PointLog, Long> {
 
     List<PointLog> findAllByReviewIdAndDeleteYnOrderByIdDesc(String reviewId, Boolean deleteYn);
+    List<PointLog> findAllByReviewIdOrderByIdDesc(String reviewId);
+    List<PointLog> findAllByUserIdAndDeleteYn(String userId, Boolean deleteYn);
     Optional<PointLog> findByReviewIdAndDeleteYn(String reviewId, Boolean deleteYn);
 }

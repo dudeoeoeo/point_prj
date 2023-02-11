@@ -4,10 +4,7 @@ import com.kei.reviewservice.business.user.dto.request.SignUpReq;
 import com.kei.reviewservice.common.constant.BaseTimeEntity;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
@@ -20,7 +17,11 @@ import java.util.UUID;
 public class User extends BaseTimeEntity {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "userId", unique = true, nullable = false)
+    private String userId;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -33,7 +34,7 @@ public class User extends BaseTimeEntity {
 
     public static User createUser(SignUpReq req) {
         return User.builder()
-                .id(UUID.randomUUID().toString())
+                .userId(UUID.randomUUID().toString())
                 .name(req.getName())
                 .email(req.getEmail())
                 .encryptPassword(req.getEncryptPassword())

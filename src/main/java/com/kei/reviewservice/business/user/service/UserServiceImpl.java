@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
         final User user = findByEmail(email);
 
         return UserDetailDto.builder()
-                .userId(user.getId())
+                .userId(user.getUserId())
                 .email(user.getEmail())
                 .build();
     }

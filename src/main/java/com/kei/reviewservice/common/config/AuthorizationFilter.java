@@ -42,7 +42,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 
         final VerifyResult result = tokenProvider.validToken(token);
         if (result.isResult()) {
-            final User user = userRepository.findById(result.getUserId()).orElseThrow(
+            final User user = userRepository.findByUserIdAndDeleteYn(result.getUserId(), false).orElseThrow(
                     () -> new UsernameNotFoundException("유저를 찾을 수 없습니다 -> " + result.getUserId())
             );
 

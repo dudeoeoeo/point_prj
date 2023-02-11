@@ -40,11 +40,7 @@ public class Point extends BaseTimeEntity {
                 .build();
     }
 
-    public void plusPoint(int point) {
-        this.point += point;
-    }
-
-    public void minusPoint(int point) {
-        this.point -= point;
+    public void savePoint(int point) {
+        this.point = this.point + point;
     }
 }
