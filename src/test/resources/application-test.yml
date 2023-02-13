@@ -1,0 +1,33 @@
+server:
+  port: 9999
+
+spring:
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:test
+    username: kei
+    password:
+    platform: h2
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    open-in-view: true
+    hibernate:
+      ddl-auto: create-drop
+      dialect: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+  sql:
+    init:
+      mode: always
+
+logging:
+  level:
+    org.hibernate.type.descriptor.sql: trace
+
+token:
+  secret: kei_token
+  issuer: kei

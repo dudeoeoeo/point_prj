@@ -47,7 +47,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
             );
 
             SecurityContextHolder.getContext().setAuthentication(
-                    new UsernamePasswordAuthenticationToken(user.getId(), user, null)
+                    new UsernamePasswordAuthenticationToken(user.getUserId(), user, null)
             );
         }
 

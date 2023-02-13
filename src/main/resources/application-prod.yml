@@ -11,18 +11,12 @@ server:
 
 spring:
   datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3309/review_db?serverTimezone=Asia/Seoul
-    username: review_dev
-    password: review_1234
     data: classpath:data.sql
     hikari:
       connectionTimeout: 30000
       maximumPoolSize: 10
 
   jpa:
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     open-in-view: true
     hibernate:
       ddl-auto: create-drop
@@ -30,6 +24,7 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     defer-datasource-initialization: true
     properties:
+      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
       hibernate:
         show_sql: true
         format_sql: true
