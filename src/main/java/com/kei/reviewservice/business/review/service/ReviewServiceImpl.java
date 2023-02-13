@@ -93,8 +93,6 @@ public class ReviewServiceImpl implements ReviewService {
         if (!userId.equals(review.getUser().getUserId()))
             throw new IllegalArgumentException("리뷰를 작성한 본인만 수정이 가능합니다.");
 
-        review.updateReview(req);
-
         final List<String> imageNames = imageUtil.uploadImages(files);
         review.addReviewImage(imageNames);
 
@@ -152,17 +150,4 @@ public class ReviewServiceImpl implements ReviewService {
                 () -> new IllegalArgumentException("해당 ID의 리뷰를 찾을 수 없습니다. ID: " + reviewId)
         );
     }
-
-    /**
-     * 포인트 증감 조건
-     * 갔던 장소에 리뷰를 달면 포인트 증감
-     * 글만 작성 + 1, 사진까지 포함 + 2
-     * 그 장소에 처음 리뷰를 남겼다면 보너스 + 1
-     *
-     */
-    /**
-     * 포인트 차감 조건
-     * 글과 사진으로 작성한 리뷰에서 사진을 삭제하면 - 1
-     * 리뷰 삭제 시 받았던 포인트 -
-     */
 }

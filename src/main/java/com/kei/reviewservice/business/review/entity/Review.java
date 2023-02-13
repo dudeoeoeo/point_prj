@@ -75,7 +75,9 @@ public class Review extends BaseTimeEntity {
         this.content = req.getContent();
         this.star = req.getStar();
 
-        if (req.getRemoveImageIds().isEmpty()) return;
+        System.out.println("updateReview => " + req.getRemoveImageIds());
+
+        if (req.getRemoveImageIds() == null || req.getRemoveImageIds().isEmpty()) return;
 
         this.reviewImages.stream().filter(ri -> req.getRemoveImageIds().contains(ri.getReviewImageId()))
                 .forEach(ri -> ri.deleteReviewImage(this.user.getUserId()));

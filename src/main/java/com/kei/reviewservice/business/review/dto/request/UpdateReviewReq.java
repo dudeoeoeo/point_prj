@@ -3,12 +3,14 @@ package com.kei.reviewservice.business.review.dto.request;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
 public class UpdateReviewReq {
-    @NotEmpty
+
+    @NotNull
     private Long placeId;
 
     @NotEmpty

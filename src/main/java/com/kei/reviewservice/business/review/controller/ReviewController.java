@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -24,7 +25,7 @@ public class ReviewController extends ControllerUtil {
     }
 
     @PostMapping
-    public ResponseEntity<EventReviewReq> createReview(HttpServletRequest request, @RequestPart(value = "req") ReviewReq req,
+    public ResponseEntity<EventReviewReq> createReview(HttpServletRequest request, @Valid @RequestPart(value = "req", required = false) ReviewReq req,
                                                        @RequestPart(value = "files", required = false)List<MultipartFile> files)
     {
         final String token = getToken(request);
@@ -34,7 +35,7 @@ public class ReviewController extends ControllerUtil {
 
     @PutMapping("/{reviewId}")
     public ResponseEntity<EventReviewReq> updateReview(HttpServletRequest request, @PathVariable String reviewId,
-                                                       @RequestPart(value = "req") UpdateReviewReq req,
+                                                       @Valid @RequestPart UpdateReviewReq req,
                                                        @RequestPart(value = "files", required = false)List<MultipartFile> files)
     {
         final String token = getToken(request);

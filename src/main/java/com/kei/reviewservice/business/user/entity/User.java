@@ -20,7 +20,7 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "userId", unique = true, nullable = false)
+    @Column(name = "user_id", unique = true, nullable = false)
     private String userId;
 
     @Column(name = "name", nullable = false)

@@ -7,6 +7,7 @@ import com.kei.reviewservice.business.point.entity.Point;
 import com.kei.reviewservice.business.point.entity.PointLog;
 import com.kei.reviewservice.business.point.entity.PointLogRepository;
 import com.kei.reviewservice.business.point.entity.PointRepository;
+import com.kei.reviewservice.business.review.constant.ActionType;
 import com.kei.reviewservice.business.review.dto.request.EventReviewReq;
 import com.kei.reviewservice.business.review.entity.Review;
 import com.kei.reviewservice.business.review.entity.ReviewRepository;
@@ -69,12 +70,14 @@ public class PointServiceImpl implements PointService {
     @Override
     public PointRes pointEvent(EventReviewReq req) {
         Point point;
-        if (req.getAction().equals("ADD"))
+        if (req.getAction().equals(ActionType.ADD.name()))
             point = addPoint(req);
-        else if (req.getAction().equals("MOD"))
+        else if (req.getAction().equals(ActionType.MOD.name()))
             point = modPoint(req);
-        else
+        else if (req.getAction().equals(ActionType.DELETE.name()))
             point = deletePoint(req);
+        else
+            throw new IllegalArgumentException("review action error -> " + req.getAction());
 
         PointRes pointRes = new PointRes();
         pointRes.setUserId(req.getUserId());
